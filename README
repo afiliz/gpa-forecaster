@@ -3,11 +3,9 @@ at the end of the quarter based on different scenarios (ex: 2 A's and a B brings
 2 C's and and A brings it down, etc.). These sites were usually cumbersome because of the way 
 they allowed input into their system, so I wanted to make a tool that solves that problem.
 
-run:
+to run the terminal application:
 javac GPA.java
 and then:
 java GPA
 
-to run the terminal application.
-
-Built during HackACM.
+Built during HackACM in roughly 2 and half to 3 hours.

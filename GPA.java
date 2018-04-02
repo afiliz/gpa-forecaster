@@ -5,14 +5,19 @@ import java.util.Scanner;
 
 public class GPA {
     public static void main(String[] args) throws IOException {
+        boolean accurateResult = false;
         Scanner reader = new Scanner(System.in); // Get GPA and credit info from past courses
+        System.out.println("\nWelcome to the GPA Forecaster!"); // Prompt
+        System.out.println("Please note that results may be off by around +/- 0.01.\n");
+
         System.out.println("Please enter in your current GPA:");
         double currentGPA = reader.nextDouble();
-        System.out.println("\nPlease enter the total number of credits you have taken at your current university:");
+        System.out.println("\nPlease enter the total number of credits you have taken at your school.");
+        System.out.println("For more accurate results, please subtract pass/no pass credits from your total credits:");
         double currentCredits = reader.nextDouble();
         double currentGradePoints = currentGPA * currentCredits;
 
-        System.out.println("\nHow many classes are you taking this quarter?"); // Get class number
+        System.out.println("\nHow many classes are you taking this quarter/semester?"); // Get current class amount
         double currentClasses = reader.nextDouble();
         reader.nextLine(); // pass EOL token
         
@@ -36,7 +41,7 @@ public class GPA {
 
         boolean doneForecasting = false; // set to true when user is done with program
 
-        System.out.println("\nNow, enter in the letter grades that you could get: ");
+        System.out.println("\nEnter in the letter grades that you could get: ");
         while(!doneForecasting) {
             double quarterCredits = 0;
             double gradePoints = 0;
@@ -44,7 +49,7 @@ public class GPA {
             while (gradeCounter < classes.size()){ 
                 System.out.println("\n" + classes.get(gradeCounter) + "'s Grade: ");
                 String grade = reader.nextLine();
-                if(grade.equals("A+")){
+                if(grade.equals("A+")){ // Add to quarter credit total based on letter grade inputted
                     gradePoints += 4.0 * classCredits.get(gradeCounter);
                     quarterCredits += classCredits.get(gradeCounter);
                     gradeCounter++;
@@ -124,21 +129,24 @@ public class GPA {
                 }
             }
 
+            // Final calculations. Add grade points from past and current quarter grade points,
+            // and final credits from past and current quarter credits, divide final grade points
+            // by final credits to get final GPA
             double finalGradePoints = currentGradePoints + gradePoints;
             double finalCredits = currentCredits + quarterCredits;
             double finalGPA = finalGradePoints/finalCredits;
-
-            System.out.println("\nYour forecasted GPA with these letter grades is: " + String.format("%.3g%n", finalGPA));
+            
+            System.out.println("\nYour forecasted GPA with these letter grades is: " + String.format("%.5g%n", finalGPA));
             boolean choiceMade = false;
             String choice = "";
-            while (!choiceMade){
+            while (!choiceMade){ //check if user wants to make another forecast
                 System.out.println("\nWould you like to make another forecast? Type 'Y' or 'N'");
                 choice = reader.next();
-                if(!choice.equals("Y") || !choice.equals("N")) choiceMade = true;
+                if(!choice.equals("Y") || !choice.equals("N") || !choice.equals("y") || !choice.equals("n")) choiceMade = true;
                 else System.out.println("You did not input a valid answer.");
             }
             reader.nextLine();
-            if(choice.equals("N")) doneForecasting = true;; 
+            if(choice.equals("N") || choice.equals("n")) doneForecasting = true;
         }
     }
 }
